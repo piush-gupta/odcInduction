@@ -78,3 +78,6 @@ OdcInduction::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 end
+
+ROOT_URL = "https://still-eyrie-14623.herokuapp.com"
+NAV_URL = "https://still-eyrie-14623.herokuapp.com/odcnavigator"
