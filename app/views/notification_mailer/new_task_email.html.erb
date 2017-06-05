@@ -1,0 +1,8 @@
+<html>
+<p> Hey <strong><%= @mentee.name %></strong></p>
+<p>You have been asssigned a new task by <strong><%= @mentor.name %></strong></p>
+<p><strong><%= @task.title %>:</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= @task.details %></p>
+<p>To be finished by EOD <%= @task.deadline.strftime("%A, %d %b %Y") %></p>
+<p>To view login <a href="http://<%= @url %>">here.</a> </p>
+</html>

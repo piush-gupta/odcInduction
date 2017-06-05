@@ -1,0 +1,111 @@
+<div class="row admin">
+  <div class="col-md-2" id="side-nav">
+    <%= render 'admin_side_nav'%>
+  </div>
+  <div class="col-md-10">
+    <div class="mentee-update-table">
+      <h2>
+        Download Report:
+        <%= link_to "Excel", mentees_updates_path(format: "xlsx") %>
+      </h2>
+    </div>
+    <h3>Mentees Updates</h3>
+    <hr />
+    <div>
+      <%= form_tag email_updates_path %>
+      <%= email_field_tag 'email',nil, placeholder: ' enter email address', class: 'input-field', id: 'email-id'%>
+      <%= submit_tag "Mail Updates", class: 'submit-button'%>
+    </div>
+    <div class="mentee-update-table">
+      <h3>Mentee Weekly Updates -</h3>
+      <h5>From <%= (Date.today.monday - 7.days).strftime("%A, %d %B %Y") %> to <%= (Date.today.monday - 1.days).strftime("%A, %d %B %Y") %></h5>  
+    </div>
+    <table class="table table-striped mentee-update-table">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Employee ID</td>
+          <td>Mentor Name</td>
+          <td>Latest Update</td>
+          <td>Day</td>
+          <td>Date</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @regulars.each do |regular| %>
+          <% updates = get_previous_week_updates(regular,Date.today) %>
+          <% updates.each_with_index do |update,index|%> 
+            <tr>
+              <% if index == 0 %>
+                <td rowspan="<%= updates.count %>">
+                  <a href="#<%= regular.id %>" data-toggle="tab" class="view-updates"><%= regular.name %></a>
+                </td>
+                <td rowspan="<%= updates.count %>">
+                  <%= regular.emp_id %>
+                </td>
+                <% unless regular.mentors.empty? %>
+                  <td rowspan="<%= updates.count %>">
+                    <%= regular.mentors.first.name %>
+                  </td>
+                <% end %>
+              <% end %>  
+              <td>
+                <%= update.content %>
+              </td>
+              <td>
+                <%= update.created_at.strftime("%A") %>
+              </td>
+              <td>
+                <%= update.created_at.strftime("%d %B %Y") %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <br/>
+    <div class="mentee-update-table">
+      <h3>Defaulters -</h3>
+    </div>
+    <table class="table table-striped mentee-update-table">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Employee ID</td>
+          <td>Mentor Name</td>
+          <td>Latest Update</td>
+          <td>Date</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @defaulters.each do |defaulter| %>
+        <tr>
+          <td>
+            <a href="#<%= defaulter.id %>" data-toggle="tab" class="view-updates"><%= defaulter.name %></a>
+          </td>
+          <td><%= defaulter.emp_id %></td>
+          <td><%= defaulter.mentors.first.name unless defaulter.mentors.empty? %></td>
+          <td><%= defaulter.updates.first.content unless defaulter.updates.empty? %> </td>
+          <td><%= defaulter.updates.first.created_at.strftime("%d %B %Y") unless defaulter.updates.empty? %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <div class="tab-content" id="tab-content">
+      <button type="button" class="btn btn-primary" id="back">Back</button>
+    		<% @regulars.each do |mentee| %>
+    		  <div class="tab-pane" id="<%= mentee.id %>">
+    		    <% @previous_updates = mentee.updates  %>  
+    		    <%= render 'users/associates/previous_updates' %>
+    		  </div>  
+    		<% end %>    
+        <% @defaulters.each do |mentee| %>
+          <div class="tab-pane" id="<%= mentee.id %>">
+            <% @previous_updates = mentee.updates  %>  
+            <%= render 'users/associates/previous_updates' %>
+          </div>  
+        <% end %>
+    </div>
+  </div>
+</div>

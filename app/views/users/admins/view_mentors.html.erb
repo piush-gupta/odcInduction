@@ -1,0 +1,29 @@
+<div class="row admin">
+    <div class="col-md-2" id="side-nav">
+      <%= render 'admin_side_nav'%>
+    </div>
+    <div class="col-md-10">
+      <h3>All mentors-</h3>
+      <hr/>
+      <table class="table table-striped">
+        <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email Id</th>
+              <th>Mobile No.</th>
+              <th>Mentees</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% @mentors.each do |mentor| %>
+          	<tr>
+          	  <td><%= mentor.name %></td>
+        		  <td><%= mentor.email %></td>
+        		  <td><%= mentor.phn_no %></td>
+              <td><%= mentor.mentees.map(&:name).join(",") %></td>
+            </tr>
+      	  <% end %>
+        </tbody>
+      </table>
+    </div>
+</div>

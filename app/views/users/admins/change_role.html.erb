@@ -1,0 +1,45 @@
+<div class="row admin">
+  <div class="col-md-2" id="side-nav">
+    <%= render 'admin_side_nav'%>
+  </div>
+  <div class="col-md-10">
+    <h3>List of Users</h3>
+    <hr/>
+    <table id="users" class="table table-striped">
+        <thead>
+            <tr>
+              <th>Employee ID</th>
+              <th>Name</th>
+              <th>Email Id</th>
+              <th>Mobile No.</th>
+              <th>Current Role</th>
+              <th>Select Role</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+          	<tr>
+          	  <td><%= user.emp_id %></td>
+          	  <td><%= user.name %></td>
+        		  <td><%= user.email %></td>
+        		  <td><%= user.phn_no %></td>
+        		  <td><%= user.roles[0].name unless user.roles.empty? %></td>
+              <td>
+                <%= form_tag edit_role_path do %>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <%= hidden_field_tag 'user_id', user.id %>
+                        <td><%= select_tag "role_id", options_from_collection_for_select(@roles, 'id', 'name') %></td>
+                        <td><%= submit_tag "Save" %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+      		      <% end %>
+              </td>
+            </tr>
+      	  <% end %>
+        </tbody>
+    </table>
+  </div>
+</div>

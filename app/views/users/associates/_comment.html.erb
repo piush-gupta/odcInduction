@@ -1,0 +1,8 @@
+<div class="comment_form">
+      <%= form_for(@comment, remote: true,method: :post ) do |f| %>
+        <%= hidden_field_tag 'update_id', update.id %>   
+        <%= f.label 'Add Comment'%>
+        <%= f.text_area :content, id: 'comment' %>
+        <%= f.submit "Add", class: "btn btn-sm" %>
+      <% end %></br>
+</div>  

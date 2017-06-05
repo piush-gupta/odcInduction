@@ -1,0 +1,3 @@
+//$('.updates_mentee').remove();
+$('.mentee_updates').html("<%= escape_javascript(render(partial: 'previous_updates' , :collection => @previous_updates)) %>");
+//$('.updates_mentee').show();

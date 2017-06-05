@@ -1,0 +1,51 @@
+<div class="row admin">
+    <div class="col-md-2" id="side-nav">
+      <%= render 'admin_side_nav'%>
+    </div>
+    <div class="col-md-10">  
+    <h3>List of Users</h3>
+    <hr/>
+    <table id="users" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Email Id</th>
+                <th>Mobile No.</th>
+                <th>Technology</th>
+                <th>Card No.</th>
+                <th>Location</th>
+                <th>Current Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <% @users.each do |user| %>
+        	<tr>
+        	  <td><%= user.emp_id %></td>
+        	  <td><%= user.name %></td>
+    		  <td><%= user.email %></td>
+    		  <td><%= user.phn_no %></td>
+    		  <td><%= user.technology %></td>
+    		  <td><%= user.card_no %></td>
+    		  <td><%= user.location %></td>
+    		  <td><%= user.roles[0].name unless user.roles.empty? %></td>  
+      		  <td><%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), destroy_user_path(user_id: user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm'%></td>     
+            </tr>
+    	<% end %>
+        </tbody>
+    </table>
+    <div class="import-users">
+        <h2>
+          Download Standard Template:
+          <%= link_to "Excel", admin_path(format: "xlsx") %>
+        </h2>
+        <h3>Import Users</h3>
+        <%= form_tag import_users_path, multipart: true do %>
+          <%= file_field_tag :file, class: 'input-field'%>
+          <%= submit_tag "Import",class: 'submit-button' %>
+        <% end %>
+    </div>
+    </div>
+</div>
+

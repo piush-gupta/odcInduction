@@ -1,0 +1,165 @@
+<style>
+  .table{
+    width: 100%;
+    border: none;
+    font-family: Arial;
+    font-size: 15px;
+    border-spacing: 0px;
+    margin-top:20px;
+    border-bottom:1px solid #ccc;
+  }
+  th {
+    text-align: center;
+  }
+  th,td{
+    border: none;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  thead{
+    background-color:#2980b9;
+    color:white;
+  }
+  tr{
+    border-bottom:1px solid #ccc;
+  }
+  .btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+  .btn:focus,
+  .btn:active:focus,
+  .btn.active:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+  }
+  .btn:hover,
+  .btn:focus {
+    color: #333;
+    text-decoration: none;
+  }
+  .btn:active,
+  .btn.active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  }
+  .btn-primary {
+    color: #fff;
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus,
+  .btn-primary:active,
+  .btn-primary.active,
+  .open > .dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #3071a9;
+    border-color: #285e8e;
+  }
+  .btn-primary:active,
+  .btn-primary.active,
+  .open > .dropdown-toggle.btn-primary {
+    background-image: none;
+  }
+  .btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+  }
+  .btn-success:hover,
+  .btn-success:focus,
+  .btn-success:active,
+  .btn-success.active,
+  .open > .dropdown-toggle.btn-success {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+  }
+  .btn-success:active,
+  .btn-success.active,
+  .open > .dropdown-toggle.btn-success {
+    background-image: none;
+  }
+  a,
+  a:visited,
+  a:link,
+  a:hover {
+    text-decoration: none;
+    color: #ffffff;
+  }
+  .buttons-table td{
+    padding: 0px 5px;
+  }
+</style>
+<h3>Mentee Monthly Updates -</h3>
+<h5>From <%= (Date.today.beginning_of_month - 1.days).beginning_of_month.strftime("%A, %d %B %Y") %> to <%= (Date.today.beginning_of_month - 1.days).strftime("%A, %d %B %Y") %></h5>
+<h5>Name : <span><%= @mentee.name.humanize %></span></h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Update</th>
+      <th>Day</th>
+    	<th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @updates.count < 1 %>
+      <tr>
+        <td colspan="4">No updates provided in the month</td>
+      </tr>
+    <% else %>
+      <% @updates.each_with_index do |update,index| %>
+        <tr>
+          <td>
+            <%= (index+1) %>
+          </td>
+          <td>
+            <%= update.content %>
+          </td>
+          <td>
+            <%= update.created_at.strftime("%A") %>
+          </td>
+          <td>
+            <%= update.created_at.strftime("%d %B %Y") %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<br/>
+<h3>Please provide your feedback for <span><%= @mentee.name.humanize %></h3>
+<h5>Month: 
+  <span>
+    <%= (Date.today.beginning_of_month - 1.days).beginning_of_month.strftime("%B %Y") %>
+  </span>
+</h5>
+<table class="buttons-table">
+  <tr>
+    <% @feedback_urls.each do |url_item| %>
+      <td>
+        <%= link_to "#{url_item[:text]}", url_item[:url], :class=>"btn btn-primary" %>
+      </td>
+    <% end %>
+  </tr>
+</table>

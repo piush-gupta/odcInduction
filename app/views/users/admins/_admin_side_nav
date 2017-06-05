@@ -1,0 +1,13 @@
+<div class="navbar navbar-inverse" role="navigation">
+  <div class="navbar navbar-collapse collapse">
+    <ul class="nav">
+      <% if can? :change_role, @user %>
+        <li><%= active_link_to "Roles", change_role_path %></li>
+      <% end %>  
+      <li><%= active_link_to "Tag Mentor", tag_mentor_path %></li>
+      <li><%= active_link_to "Mentees Updates", mentees_updates_path %></li>
+      <li><%= active_link_to "View All Mentors", view_mentors_path %></li>
+      <li><%= active_link_to "All Associates", view_associates_path %></li>
+    </ul>
+  </div>
+</div>

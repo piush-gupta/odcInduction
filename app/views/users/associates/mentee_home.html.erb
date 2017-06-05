@@ -1,0 +1,81 @@
+<div class="current_user_id" id="<%= current_user.id %>"></div>
+<% if params[:type] && params[:type].match("tasks") %>
+		<div class="mentee row">
+			<%= render 'profile_details' %>
+			<div class="col-lg-10">
+				<div class="updates_mentee" id="<%= current_user.id %>">
+					<% @previous_tasks = current_user.tasks  %>
+					<% if @previous_tasks.any? %> 
+						<%= render 'tasks/previous_tasks' %>
+					<% else %>
+						<h3>No task assigned yet.!!</h3>
+					<% end %>
+				</div>
+			</div>
+	</div>
+<% else %>
+	<%= content_for :head do %>
+		<% javascript_include_tag 'textLimiter.js' %>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$(".task-hidden-id").empty();
+					$('#update_content').limiter(400,'.message');
+					$('#update_content').bind('keyup',function(e){
+						var content = $(this).val();
+						if(content.indexOf("#") > -1){
+							var searchterm = content.split("#").pop();
+							var contentLength = content.length;
+							if(searchterm != ""){
+								var url = "/ODCInduction/tasks/get_tasks";
+								var user_id = $(".current_user_id").attr("id");
+								var data = { 'searchterm' : searchterm, 'user_id': user_id }	
+								$.ajax({
+									url: url,
+									type: 'get',
+									data: data,
+									dataType: 'json',
+									success: function(result){
+										console.log(result);
+										var html = "<span title='Click to select'><ul class='title-list'>";
+										$.each(result,function(key,value){
+											console.log(key + " : " + value.title );
+											html = html + "<li class='title-li' id="+ value.id +">" + value.title + "</li>";
+										});
+										html = html + "</ul></span>";
+										$('.resultDiv').empty();
+										$('.resultDiv').append(html);
+										$('.resultDiv').show();
+										$('.title-li').bind('click',function(){
+											var task_id = $(this).attr('id');
+											$(".task-hidden-id").val($(".task-hidden-id").val()+","+task_id);
+											console.log($(".task-hidden-id").val());
+											var task_title = $(this).text().replace(searchterm,'');
+											$('#update_content').val($('#update_content').val()+task_title);
+											$('.resultDiv').empty();
+											$('.resultDiv').hide();
+										});
+									}
+								});
+							}
+						}
+						else{
+							$('.resultDiv').empty();
+							$('.resultDiv').hide();
+						}
+					});
+				});
+			</script>	
+	<% end %>
+	<div class="mentee row">
+		<%= render 'profile_details' %>
+		<div class="col-lg-10">
+			<div class="update_form">
+				<%= render 'updates/update' %>
+				<div class="resultDiv"></div>
+			</div>
+	    <div class="updates_mentee" id="<%= current_user.id %>">
+	  	  <%= render 'updates/previous_updates' %>
+	  	</div>
+		</div>
+	</div>
+<% end %>

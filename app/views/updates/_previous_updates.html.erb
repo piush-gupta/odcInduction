@@ -1,0 +1,44 @@
+<div class="mentee-updates">
+  <h1>Updates</h1>
+  <% @previous_updates.each do |update| %>
+    <div class="post">
+      <div class="heading">
+        <div class="user">
+         <%= get_user(update.user_id).name %>
+        </div>
+        <div class="time"> 
+          <%= "#{time_ago_in_words(update.created_at)} ago" %>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <hr/>
+      <div class="update">
+        <%= raw(hash_tag(update.id,update.user_id)) %>
+      </div>
+      </br>
+      <% unless update.comments.empty? %>
+        <% update.comments.sort.each do |comment| %>
+          <div class="comment-area">
+            <div class="user"> 
+              <div class="username"><%= get_user(comment.user_id).name unless get_user(comment.user_id).nil? %></div>
+              <% if current_user.id == comment.user_id then %>
+                <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), comment_path(id: comment.id, update_id: update.id), remote: true, method: :delete, data: { confirm: 'Are you sure?' } ,class: 'delete_icon'%>
+              <% end %>  
+            </div>
+            <div style="clear:both"></div>
+            <div class="text-muted">
+              <%= time_ago_in_words(comment.created_at)%>
+            </div>
+            <div class="comment">
+              <%= comment.content %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      </br>
+      <% if current_user.has_role? :associate then %>
+        <%= render partial: "comments/comment", locals: { comment: @comment, update: update } %> 
+      <% end %>
+    </div>         
+  <% end %>
+</div>

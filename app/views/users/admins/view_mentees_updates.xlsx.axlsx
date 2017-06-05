@@ -1,0 +1,35 @@
+mentee_workbook = xlsx_package.workbook
+mentee_workbook.styles do |s|
+	bold = s.add_style :b => true
+	bold_medium = s.add_style :sz => 16,:b => true
+
+	mentee_workbook.add_worksheet(name: "Regulars") do |sheet|
+		from_date = (Date.today.monday - 7.days).strftime("%A, %d %B %Y")
+		to_date = (Date.today.monday - 3.days).strftime("%A, %d %B %Y")
+	  reg_columns = ["Name","Employee ID","Mentor Name","Latest Update","Day","Date"]
+		sheet.add_row ["Regulars"], :style => bold_medium
+	  sheet.add_row ["From",from_date,"to",to_date]
+	  sheet.add_row reg_columns, :style => bold
+	  @regulars.each do |regular|
+	  	updates = get_previous_week_updates(regular,Date.today)
+	  	updates.each_with_index do |update,index|
+	  		if index == 0
+	  			sheet.add_row [regular.name,regular.emp_id,regular.mentors.first.name,update.content,update.created_at.strftime("%A"),update.created_at.strftime("%d %B %Y")]
+	  		else
+	  			sheet.add_row ["","","",update.content,update.created_at.strftime("%A"),update.created_at.strftime("%d %B %Y")]
+	  		end
+	  	end
+	  end
+	  def_columns = ["Name","Employee ID","Mentor Name","Latest Update","Date"]
+	  sheet.add_row [""]
+	  sheet.add_row ["Defaulters"], :style => bold_medium
+	  sheet.add_row def_columns, :style => bold
+	  @defaulters.each do |defaulter|
+	  	mentor = defaulter.mentors.first.name unless defaulter.mentors.empty?
+	  	update_content = defaulter.updates.first.content unless defaulter.updates.empty?
+	  	update_date = defaulter.updates.first.created_at.strftime("%d %B %Y") unless defaulter.updates.empty?
+	  	sheet.add_row [defaulter.name,defaulter.emp_id,mentor,update_content,update_date]
+	  end
+	end
+end
+

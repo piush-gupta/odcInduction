@@ -1,0 +1,72 @@
+<h2>Create New <%= resource_name.to_s.humanize %></h2>
+<div class="form-user-edit">
+  <%= form_for(resource, :as => resource_name, :url => create_user_path, :html => { :method => :post, :multipart => :true }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <div class="left">
+      <div><%= f.label :email %><br />
+      <%= f.email_field :email, :autofocus => true  %></div>
+
+      <div><%= f.label :name %><br />
+      <%= f.text_field :name%>
+      </div>
+
+      <div><%= f.label "Employee ID" %><br />
+
+          <%= f.text_field :emp_id %>
+
+      </div>
+
+      <div><%= f.label "Phone No." %><br />
+        <%= f.text_field :phn_no %>
+      </div>
+
+      <div><%= f.label "Card No." %><br />
+      <%= f.text_field :card_no %>
+      </div>
+
+      <div><%= f.label "Location" %><br />
+      <%= f.text_field :location %>
+      </div>
+
+      <div><%= f.label "Address" %><br />
+      <%= f.text_area :address %>
+      </div>
+    </div>
+
+    <div class="right">
+      <div><%= f.label :technology %><br />
+      <%= f.text_field :technology %>
+      </div>
+
+      <div><%= f.label :experience %><br />
+      <%= f.number_field :experience, step: 0.5 %>
+      </div>
+         
+      <div>
+        <%= f.label :image %>
+        <%= f.file_field :avatar %>
+      </div>
+      <% if can? :change_role, @user %>
+        <div>
+          <%= label_tag "Select Role" %>
+          <%= select_tag "role_id", options_from_collection_for_select(@roles, 'id', 'name') %>
+        </div>
+      <% else %>
+        <div>
+          <%= label_tag "Select Role" %>
+          <%= select_tag "role_id", options_from_collection_for_select(@roles, 'id', 'name'), disabled: :true %>
+        </div>
+      <% end %>
+      <div id="associate_type">
+        <%= f.label :associate, "Associate Type" %>
+        <%= f.collection_select :associate, ['Mentor','Mentee'], :to_s, :to_s, include_blank: false %>
+      </div>    
+
+      <div class="buttons update-button"><%= f.submit "Create",class: 'btn btn-primary' %></div>
+    </div>
+  <% end %>
+  <div class="form-edit-back">
+    <%= link_to "Back", :back, id: "back-link" %>
+  </div>
+</div>

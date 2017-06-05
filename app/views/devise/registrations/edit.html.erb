@@ -1,0 +1,70 @@
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="form-user-edit">
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :multipart => :true }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <div class="left">
+      <div><%= f.label :email %><br />
+      <%= f.email_field :email, :disabled => 'disabled' %></div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+      
+      <div><%= f.label :name %><br />
+      <%= f.text_field :name, :autofocus => true %>
+      </div>
+
+      <div><%= f.label "Employee ID" %><br />
+
+          <%= f.text_field :emp_id, :disabled => resource.emp_id.nil? ? false : "disabled" %>
+
+      </div>
+
+      <div><%= f.label "Phone No." %><br />
+        <%= f.text_field :phn_no %>
+      </div>
+
+      <div><%= f.label "Card No." %><br />
+      <%= f.text_field :card_no %>
+      </div>
+
+      <div><%= f.label "Location" %><br />
+      <%= f.text_field :location %>
+      </div>
+
+      <div><%= f.label "Address" %><br />
+      <%= f.text_area :address %>
+      </div>
+    </div>
+
+    <div class="right">
+      <div><%= f.label :technology %><br />
+      <%= f.text_field :technology %>
+      </div>
+
+      <div><%= f.label :experience %><br />
+      <%= f.number_field :experience, step: 0.5 %>
+      </div>
+         
+      <div>
+        <%= f.label :image %>
+        <%= f.file_field :avatar %>
+      </div>
+
+      <div><span title="Leave blank if you don't want to change it"><%= f.label :password %></span><br />
+      <%= f.password_field :password, :autocomplete => "off" %></div>
+
+      <div><%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation %></div>
+
+      <div><span title="We need your current password to confirm your changes"><%= f.label :current_password %></span><br />
+      <%= f.password_field :current_password %></div>
+    
+      <div class="buttons update-button"><%= f.submit "Update",class: 'btn btn-primary' %></div>
+    </div>
+  <% end %>
+  <div class="form-edit-back">
+    <%= link_to "Back", :back, id: "back-link" %>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<%= form_for @update do |f| %>
+  
+  <div class="update-area">
+    <%= f.label 'Add your update'%>
+    <%= f.text_area :content %>
+    <%= hidden_field_tag "task-hidden-id", task.id %>
+    <div class="message"></div>
+  </div>
+  <%= f.submit "Save my update", class: "btn  btn-primary" %>
+<% end %>

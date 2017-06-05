@@ -1,0 +1,88 @@
+<div class="mentee-updates" style="top: 0;">
+  <%= content_for :head do %>
+    <% if !params[:type].blank? %>
+      <% @task_id = params[:type].gsub('tasks','') %>
+    <% end %>
+    <%= hidden_field_tag :task_id , @task_id , :id => "hidden_tag" %>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.result-updates').hide();
+        if ("#hidden_tag"){
+          var task_id = $("#hidden_tag")[0]['defaultValue'];
+          if (task_id != 0){
+            var target = $("#"+task_id).offset().top;
+            $('html,body').animate({scrollTop: target}, 1500);
+          }
+        }
+        $('.task-update').click(function(event){
+          event.preventDefault();
+          var url = "/ODCInduction/tasks/get_updates";
+          var task_id = $(this).attr("id");
+          var data = { 'task_id' : task_id };
+          if ($('#chevron'+task_id).hasClass("glyphicon-chevron-down")){
+            $('#chevron'+task_id).removeClass("glyphicon-chevron-down");
+            $('#chevron'+task_id).addClass("glyphicon-chevron-up");
+            $('.result-updates').empty();
+            $('.result-updates').append("<hr/><h4 style='float:left; font-weight:bold; color:#2980b9;'>Updates:</h4><br/><br/>");
+            $.ajax({
+              url: url,
+              type: 'get',
+              data: data,
+              dataType: 'json',
+              success: function(result){
+                var count = 1 ;
+                $.each(result,function(i,r){
+                  var content = r['content'];
+                  var time_ago = r['created_at'].substr(0, 10).split("-");
+                  html = "<div><strong>"+ count + ")</strong>&nbsp;&nbsp;" + content +"</div><sub style='float:right; color:grey;'>Created at "+ time_ago +"</sub><br/><hr/>";
+                  count = count + 1;
+                  $('.result-updates').append(html);
+                });  
+              $('#result-updates'+task_id).slideDown();
+              }
+            });
+          }
+          else{
+            $('#chevron'+task_id).addClass("glyphicon-chevron-down");
+            $('#chevron'+task_id).removeClass("glyphicon-chevron-up");            
+            $('#result-updates'+task_id).slideUp();
+          }
+        });
+      });
+    </script>
+  <% end %>
+  <h1>Tasks</h1>
+  <% @previous_tasks.each do |task| %>
+    <div class="post" id="<%=task.id%>">
+      <div class="heading">
+          <div class="user">
+            <%= get_user(task.user_id).name %>
+            <sub style="color: grey;">&nbsp;was assigned <%= "#{time_ago_in_words(task.created_at)} ago" %></sub>
+          </div>
+      </div>
+      <div class="clear"></div>
+      <hr/>
+      <div class="update">
+        <strong><%= task.title %>:</strong>
+        <br/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= task.details %></p>
+        <hr/>
+        <strong>Deadline:</strong>
+        <span><%= task.deadline.strftime("%A, %d %b %Y") %></span>
+        <% if task.updates.any? %>
+          <sub>
+            <a href style="float:right;" class="task-update" id ="<%= task.id %>">Show updates<%= hidden_field_tag :task_id , task.id %><span class="glyphicon glyphicon-chevron-down" id="chevron<%=task.id%>"></span>
+            </a>
+          </sub>
+          <div class="result-updates" id="result-updates<%=task.id%>">
+          </div>
+        <% end %>
+        <div class="inner-1-block">
+          <% if current_user.associate == 'F' %>
+            <%= render partial: 'users/associates/update', :locals => { :task => task } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

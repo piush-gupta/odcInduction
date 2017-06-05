@@ -1,0 +1,4 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "StandardTemplate") do |sheet|
+    sheet.add_row @columns
+end

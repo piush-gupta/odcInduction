@@ -1,0 +1,50 @@
+<% content_for :head do %>
+  
+<% end %>
+<div class="row admin">
+    <div class="col-md-2" id="side-nav">
+      <%= render 'admin_side_nav'%>
+    </div>
+    <div class="col-md-10">
+      <h3>All Associates-</h3>
+      <hr/>
+      <table id="associates" class="table table-striped">
+        <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email Id</th>
+              <th>Mobile No.</th>
+              <th>Current Tag</th>
+              <th>Select Tag</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% @associates.each do |associate| %>
+          	<tr>
+          	  <td><%= associate.name %></td>
+        		  <td><%= associate.email %></td>
+        		  <td><%= associate.phn_no %></td>
+              <td><%= associate.associate == 'F' ? 'Mentee' : 'Mentor' %></td>
+              <td>
+                <%= form_tag edit_tag_path do %>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <%= hidden_field_tag 'user_id', associate.id %>
+                        <td><%= select_tag "associate_tag", options_for_select([ "Mentor", "Mentee" ], associate.associate ) %></td>
+                        <td><%= submit_tag "Save" %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <% end %>
+              </td>
+            </tr>
+      	  <% end %>
+        </tbody>
+      </table>
+      <div class="import-users">
+        <h2><%= link_to 'Add New User', new_user_path %></h2>
+        
+      </div>
+    </div>
+</div>

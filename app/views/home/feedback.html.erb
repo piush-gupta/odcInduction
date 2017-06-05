@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Feedback</title>
+</head>
+<body>
+	<h1>Feedback</h1>
+	<h3><%= @message %></h3>
+	<div class="form-signin">
+  	<h2>Add Remark</h2>
+		<%= form_tag url: feedback_path, method: :patch do %>
+		  <%= label_tag "Remark" %><br />
+		  <%= text_area_tag :remark %>
+		  <div class="buttons">
+		  	<%= submit_tag "Save" , class: 'btn btn-primary'%>
+		  </div>
+		<% end %>
+	</div>
+</body>
+</html>

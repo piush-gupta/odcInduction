@@ -1,0 +1,109 @@
+<style>
+  .table{
+    width: 100%;
+    border: none;
+    font-family: Arial;
+    font-size: 15px;
+    border-spacing: 0px;
+    margin-top:20px;
+    border-bottom:1px solid #ccc;
+  }
+  th {
+    text-align: center;
+  }
+  th,td{
+    border: none;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  thead{
+    background-color:#2980b9;
+    color:white;
+  }
+  tr{
+    border-bottom:1px solid #ccc;
+  }
+  .p-link-custom{
+    font-size: 10pt;
+  }
+</style>
+<div class="p-link-custom">
+  To login to the site, just follow this link <a href="<%= @url %>"><strong>ODC Induction</strong></a><br/>
+</div>
+<h3>Mentee Weekly Updates -</h3>
+<h5>From <%= (Date.today.monday - 7.days).strftime("%A, %d %B %Y") %> to <%= (Date.today.monday - 1.days).strftime("%A, %d %B %Y") %></h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+    	<td>Name</td>
+    	<td>Employee ID</td>
+    	<td>Mentor Name</td>
+    	<td>Latest Update</td>
+      <td>Day</td>
+    	<td>Date</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @regulars.each do |regular| %>
+      <% updates = get_previous_week_updates(regular,Date.today) %>
+      <% updates.each_with_index do |update,index|%> 
+        <tr>
+          <% if index == 0 %>
+            <td rowspan="<%= updates.count %>">
+              <%= regular.name %>
+            </td>
+            <td rowspan="<%= updates.count %>">
+              <%= regular.emp_id %>
+            </td>
+            <% unless regular.mentors.empty? %>
+              <td rowspan="<%= updates.count %>">
+                <%= regular.mentors.first.name %>
+              </td>
+            <% end %>
+          <% end %>  
+          <td>
+            <%= update.content %>
+          </td>
+          <td>
+            <%= update.created_at.strftime("%A") %>
+          </td>
+          <td>
+            <%= update.created_at.strftime("%d %B %Y") %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<br/>
+<h3>Defaulters -</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Employee ID</td>
+      <td>Mentor Name</td>
+      <td>Latest Update</td>
+      <td>Date</td>
+    </tr>
+  </thead>
+  <tbody>
+
+<% @defaulters.each do |defaulter| %>
+
+    <tr>
+      <td>
+        <%= defaulter.name %>
+      </td>
+      <td><%= defaulter.emp_id %></td>
+      <% unless defaulter.mentors.empty? %>
+      <td><%= defaulter.mentors.first.name %></td>
+      <% end %>
+        <% unless defaulter.updates.empty?%> 
+      <td><%= defaulter.updates.first.content %> </td>
+      <td><%= defaulter.updates.first.created_at.strftime("%d %B %Y") %></td>
+        <% end %>
+    </tr>
+<% end %>
+</tbody>
+</table>

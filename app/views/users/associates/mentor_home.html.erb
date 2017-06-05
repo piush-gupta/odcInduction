@@ -1,0 +1,69 @@
+<div class="mentor row">
+	<%= render 'profile_details' %>
+    <div class="col-lg-10">
+			<h3>Your mentees</h3>
+        
+			<ul class="nav nav-tabs" id ="update-nav">
+			  <% current_user.mentees.each do |mentee| %>
+			  <li id ="tab-<%= mentee.id %>">
+			    <a href="#<%= mentee.id %>" data-toggle="tab"><%= mentee.name %></a>
+			  </li>
+			  <% end %>
+			</ul>
+		<% if params[:type] && params[:type].match("tasks") %>
+			<div class="tab-content">
+				<a data-toggle="modal" href="#myModal" class="btn btn-primary" id = "task">Assign Task</a>
+			  <!-- Modal -->
+			  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			          <h4 class="modal-title">Compose Task</h4>
+			        </div>
+			        <% @task = Task.new %>
+			        <%= form_tag tasks_path, remote: true, :id => 'task_form' do %>
+			        	<div class="modal-body">
+			        		<%= hidden_field_tag :mentee_id, :id => "mentee_id" %>
+				        	<strong>Title</strong>&nbsp;&nbsp;&nbsp;
+				        	<label id="title-error" class="task-error"></label>
+				        	<br/>
+				        	<%= text_field_tag :title %>
+				        	<strong>Details</strong>&nbsp;&nbsp;&nbsp;
+				        	<label id="details-error" class="task-error"></label>
+				        	<br/>
+				        	<%= text_area_tag :details %>
+				        	<strong>Deadline*</strong><sub>&nbsp;&nbsp;&nbsp;is after 7 days by default</sub>
+				        	<br/>
+			        		<input type="text" name="deadline" id="deadline" class='datepicker' />
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				         <button type="submit" class="btn btn-primary" id = "task_submit">OK</button>
+				        </div>
+				    <% end %>
+			      </div><!-- /.modal-content -->
+			    </div><!-- /.modal-dialog -->
+			  </div><!-- /.modal -->
+			  <% current_user.mentees.each do |mentee| %>
+	        <div class="tab-pane" id="<%= mentee.id %>" >
+	        	<%= hidden_field_tag :mentee_id, :id => "mentee_id" %>
+		        <% @previous_tasks = mentee.tasks  %>  
+		        <% if @previous_tasks.any? %>
+		        	<%= render 'tasks/previous_tasks' %>
+		        <% end %>
+			    </div>  
+			  <% end %>
+	      </div>
+		 <% else %>
+		  <div class="tab-content">
+			  <% current_user.mentees.each do |mentee| %>
+	        <div class="tab-pane" id="<%= mentee.id %>" >
+		        <% @previous_updates = mentee.updates  %>  
+		        <%= render 'updates/previous_updates' %>
+			    </div>  
+			  <% end %>
+	      </div>
+		<% end %>
+	</div>
+</div>

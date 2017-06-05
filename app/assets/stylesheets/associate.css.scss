@@ -1,0 +1,213 @@
+.content{
+  padding-top:10px;
+  color:#444;
+  font-family:"Helvetica Neue",Helvetica,sans-serif;
+  font-size:14px;
+}
+
+.post{
+  background-color:#ecf0f1;
+  padding:20px;
+  margin-bottom:10px;
+  overflow: hidden;
+}
+.post hr{
+  margin-top:5px;
+  border-top: 1px solid #ccc;
+}
+.post .heading .user{
+  float:left;
+  font-size:16px;
+  color:#2980b9;
+}
+.post .heading .time{
+  float:right;
+  font-size:12px;
+  color:#999;
+  margin-top: 5px;
+}
+.comment_form{
+	width:200px;
+}
+
+.comment-area{
+  width:300px;
+	font-size:14px;
+  padding:10px;
+  border-left:2px solid #bbdff8;
+  background-color:#F6F8F9;
+  margin-bottom:10px;
+}
+
+.comment-area .user {
+color: #59AFEB;
+}
+
+.update{
+  color:#444;
+  font-size:16px;
+  font-family:"Helevetica Neue",Helvetica,sans-serif;
+  
+}
+
+.update_form {
+  width:300px;
+}
+.mentee .update_form{
+  position: fixed;
+  background-color: white;
+  top: 50px;
+  padding-top: 20px;
+  width:100%;
+  z-index:2;
+}
+.mentee .mentee-updates{
+  position: relative;
+  top: 200px;
+
+}
+.mentee-updates .btn-sm{
+  width: 30%;
+margin-left: 143px;
+
+}
+.hr {
+  width:300px;
+  margin: 0px;
+  height: 1px;
+}
+.mentee .col-lg-10,.mentor .col-lg-10{
+  position:relative;
+  min-height:600px;
+  left: 238px;
+  width: 799px;
+  padding-right: 40px;
+}
+
+.mentee .col-lg-2{
+  min-height:600px;
+  border-right:1px solid #ccc;
+  position:fixed;
+  padding-top:10px;
+  min-width: 210px;
+  max-width: 225px;
+}
+
+.col-lg-2{
+  min-height:600px;
+  border-right:1px solid #ccc;
+  position:fixed;
+  padding-top:10px;
+  min-width: 210px;
+  max-width: 225px;
+}
+
+ .mentor .col-lg-2{
+  min-height:600px;
+  border-right:1px solid #ccc;
+  position:fixed;
+  padding-top:10px;
+}
+.mentee .col-lg-2 img,.mentor .col-lg-2 img {
+width: 180px;
+height: 180px;
+margin-left: 0px;
+}
+.mentee-updates h1{
+  font-size:30px;
+  text-align:left;
+}
+
+.time{
+  color:#999;
+}
+.update-area{
+ width: 744px;
+ padding-bottom:10px;
+
+}
+#new_update .btn {
+width: 20%;
+position: relative;
+margin-left: 0%;
+float: right;
+}
+#update_content{
+  height: 84px;
+}
+.message {
+    float: left;
+}
+.mentee{
+  padding-top:15px;
+}
+
+.delete_icon {
+  float:right;
+  padding-right: 10px;
+}
+
+.name {
+  display: block;
+  font-size: 26px;
+  line-height: 30px;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom:10px;
+}
+
+.mentee-updates {
+  background-color: C2DEEA;
+}
+.mentee-updates .username{
+  float:left;
+  width: 90%;
+}
+/* mentor-page details*/
+.details div{
+  float:left;
+}
+.clear{
+  clear:both;
+}
+.mentor .details{
+ 
+  padding:5px;
+ 
+  
+ }
+ .detail-item{
+  width:100%;
+   overflow-x: hidden;
+  text-overflow: ellipsis;
+ }
+.mentor .detail-container, .mentee .detail-container{
+  margin-top:5px;
+  padding-top:15px;
+  padding-bottom:15px;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+}
+.text-muted{
+  font-size:12px;
+}
+.mentee .mentor-detail{
+  padding-top:20px;
+  text-align:center;
+}
+.details .mentor{
+  font-weight: bold;
+}
+
+.custom-glyphicon{
+  position: fixed;
+}
+
+.span-within-details{
+  max-width: 163px; 
+  margin-left: 12px;
+  overflow: hidden; 
+  display: inline-block; 
+  text-overflow: ellipsis;
+  line-height: 1;
+}

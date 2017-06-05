@@ -1,0 +1,51 @@
+<div class="row admin">
+  <div class="col-md-2" id="side-nav">
+    <%= render 'admin_side_nav'%>
+  </div>
+  <div class="col-md-10">
+    <h3>List of New Joinees</h3>
+    <hr/>
+    <table id= "users" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Current Mentor</th>
+          <th>Select Mentor</th>   
+          <th>Untag Mentor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% get_mentees.each do |user|%>
+        	<tr>
+            <td><%= user.name %></td>
+            <td><%= user.mentors.first.email unless user.mentors.empty?%></td>
+            <td>
+              <%= form_tag tag_mentor_path do %>
+                <table>
+                  <tbody>
+                    <tr>
+      	              <%= hidden_field_tag 'mentee_id', user.id %>
+                      <td><input type="text" list="mentors" name="email" ></td>
+                      <td><%= submit_tag "Save" %></td>
+      	            </tr>
+                  </tbody>
+                </table> 
+              <% end %>
+            </td>
+            <td>
+              <%= form_tag untag_mentor_path do %>
+                <%= hidden_field_tag 'mentee_id', user.id %>
+                <%= submit_tag "Untag Mentors" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <datalist id="mentors">
+      <% get_mentors.each do |user| %>
+        <option value="<%= user.email %>" ></option>
+      <% end %>
+    </datalist>
+  </div>
+</div>
