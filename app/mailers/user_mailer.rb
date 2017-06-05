@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
   before_filter :set_url
-  default from: "\"ODC Induction\" <odcinduction@external.mckinsey.com>"
+  default from: "\"ODC Induction\" <kumar.piush@tcs.com>"
   include Users::AdminsHelper
   helper :updates
 
@@ -40,6 +40,6 @@ class UserMailer < ActionMailer::Base
   private
     def set_url
       @url = ROOT_URL
-      @navigator_url = "http://dev-utility-lx53.amdc.mckinsey.com/odcnavigator"
+      @navigator_url = NAV_URL
     end
 end

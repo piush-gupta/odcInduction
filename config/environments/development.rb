@@ -40,3 +40,4 @@ OdcInduction::Application.configure do
 end
 
 ROOT_URL = "http://localhost:3000"
+NAV_URL = "http://localhost:3000/odcnavigator"
