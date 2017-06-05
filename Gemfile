@@ -6,7 +6,10 @@ gem 'rails', '4.0.2'
 gem 'rails-observers'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+group :development, :test do
+  gem 'sqlite3'
+end
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -54,10 +57,6 @@ group :devutility do
   #gem "crypto",'0.0.4', :git => 'http://githuben.intranet.mckinsey.com/AppDev/crypto.git'
   gem 'capistrano' , '2.9.0'
   gem 'rvm-capistrano', :require => false
-end
-
-group :development do
-  gem 'sqlite3'
 end
 
 group :production do
