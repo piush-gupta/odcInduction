@@ -1,6 +1,6 @@
 class NotificationMailer < ActionMailer::Base
 
-   default from: "\"ODC Induction\" <kumar.piush@tcs.com>"
+   default from: "\"ODC Induction\" <tcs.induction@gmail.com>"
    def new_update_email(mentor,mentee,update)
     @mentee = mentee
     @mentor = mentor
@@ -15,7 +15,7 @@ class NotificationMailer < ActionMailer::Base
     @commenter = commenter
     @receiver = user
     @url = 'localhost:3000/ODCInduction'
-    mail(to: user.email,:from => "\"ODC Induction\" <kumar.piush@tcs.com>", subject: 'New comment') do |format|
+    mail(to: user.email,:from => "\"ODC Induction\" <tcs.induction@gmail.com>", subject: 'New comment') do |format|
      format.html
     end
   end
@@ -25,7 +25,7 @@ class NotificationMailer < ActionMailer::Base
     @mentor = mentor
     @task = task
     @url = 'localhost:3000/ODCInduction'
-    mail(to: mentee.email,:from => "\"ODC Induction\" <kumar.piush@tcs.com>", subject: 'New task assigned.') do |format|
+    mail(to: mentee.email,:from => "\"ODC Induction\" <tcs.induction@gmail.com>", subject: 'New task assigned.') do |format|
      format.html
     end
   end

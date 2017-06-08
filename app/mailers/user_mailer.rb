@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
   before_filter :set_url
-  default from: "\"ODC Induction\" <kumar.piush@tcs.com>"
+  default from: "\"ODC Induction\" <tcs.induction@gmail.com>"
   include Users::AdminsHelper
   helper :updates
 

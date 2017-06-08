@@ -128,6 +128,6 @@ class Users::AdminsController <  ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:email ,:name ,:emp_id ,:phn_no ,:card_no ,:location ,:address ,:experience ,:associate ,:password ,:password_confirmation ,:first_login_token )
+      params.require(:user).permit(:email ,:name ,:emp_id ,:phn_no ,:card_no ,:location ,:address ,:experience ,:associate ,:password ,:password_confirmation ,:first_login_token, :technology )
     end
 end
