@@ -66,6 +66,7 @@ class Users::AdminsController <  ApplicationController
   end
   
   def new_user
+    @user = User.new
     @roles = Role.all
   end
 
@@ -74,13 +75,16 @@ class Users::AdminsController <  ApplicationController
     if params[:user][:associate]
       parameters[:associate] = params[:user][:associate] == 'Mentor' ? 'M' : 'F'
     end
-    user = User.new(parameters)   
-    user.first_login_token = user.create_token(user.email) 
-    user.roles.clear
+    @user = User.new(parameters)   
+    @user.first_login_token = @user.create_token(@user.email) 
+    @user.roles.clear
     role = Role.find_by(id: params[:role_id])
-    user.roles << role
-    if user.save
+    @user.roles << role
+    if @user.save
       redirect_to view_associates_path, :notice => 'User created'
+    else
+      @roles = Role.all
+      render 'new_user'
     end
   end
 

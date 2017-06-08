@@ -78,17 +78,20 @@ OdcInduction::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+
   # Mailer settings
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                 587,
   domain:               'gmail.com',
-  user_name:            'hello@andratio.co',
-  password:             'admin226688',
+  user_name:            'tcs.induction',
+  password:             'password@1947',
   authentication:       'plain',
   enable_starttls_auto: true  }
 end
 
-ROOT_URL = "https://still-eyrie-14623.herokuapp.com"
-NAV_URL = "https://still-eyrie-14623.herokuapp.com/odcnavigator"
+ROOT_URL = "https://odc-induction.herokuapp.com"
+NAV_URL = "https://odc-induction.herokuapp.com/odcnavigator"

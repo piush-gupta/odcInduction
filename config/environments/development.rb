@@ -15,6 +15,7 @@ OdcInduction::Application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
   
   # Mailer settings
   config.action_mailer.delivery_method = :smtp
@@ -22,8 +23,8 @@ OdcInduction::Application.configure do
   address:              'smtp.gmail.com',
   port:                 587,
   domain:               'gmail.com',
-  user_name:            'vaibhav.khl',
-  password:             '',
+  user_name:            'tcs.induction',
+  password:             'password@1947',
   authentication:       'plain',
   enable_starttls_auto: true  }
 

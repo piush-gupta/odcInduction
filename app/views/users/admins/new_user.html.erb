@@ -1,7 +1,12 @@
 <h2>Create New <%= resource_name.to_s.humanize %></h2>
 <div class="form-user-edit">
-  <%= form_for(resource, :as => resource_name, :url => create_user_path, :html => { :method => :post, :multipart => :true }) do |f| %>
+  <%= form_for(@user, :as => resource_name, :url => create_user_path, :html => { :method => :post, :multipart => :true }) do |f| %>
     <%= devise_error_messages! %>
+    <% if @user.errors.any? %>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    <% end %>
 
     <div class="left">
       <div><%= f.label :email %><br />
